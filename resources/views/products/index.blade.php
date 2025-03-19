@@ -31,7 +31,8 @@
                 <td><img src="{{ $product->image }}" alt="{{ $product->name }}" width="100"></td>
                 <td>
                     <!-- Edit button -->
-                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-success btn-sm">Edit</a>
+                    <a href="{{ route('products.show', $product->id) }}" class="btn btn-primary btn-sm">Details</a>
                     
                     <!-- Delete button -->
                     <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display: inline-block;">

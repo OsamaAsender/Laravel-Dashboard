@@ -30,31 +30,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        // Validate the request
+        $validatedData = $request->validate([
+            'name'          => 'required|string|max:255',
+            'description'   => 'required|string',
+            'category_name' => 'required|string|max:255',
+            'price'         => 'required|numeric',
+            'image'         => 'nullable|image|max:2048',
         ]);
-
-        // Handle image upload
-        $imagePath = null;
+    
+        // Handle file upload if necessary
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('products', 'public');
+            $validatedData['image'] = $imagePath;
         }
-
-        // Create product
-        Product::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'stock' => $request->stock,
-            'image' => $imagePath
-        ]);
-
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+    
+        Product::create($validatedData);
+    
+        return redirect()->back()->with('success', 'Product created successfully!');
     }
+    
 
     /**
      * Display the specified product.
@@ -73,6 +68,8 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         return view('products.edit', compact('product'));
     }
+    
+    
 
     /**
      * Update the specified product in storage.
@@ -85,7 +82,6 @@ class ProductController extends Controller
             'name' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
             'price' => 'sometimes|numeric|min:0',
-            'stock' => 'sometimes|integer|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -100,7 +96,7 @@ class ProductController extends Controller
         }
 
         // Update other fields
-        $product->update($request->only(['name', 'description', 'price', 'stock']));
+        $product->update($request->only(['name', 'description', 'price']));
 
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }

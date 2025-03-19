@@ -14,6 +14,8 @@ Route::get('/', function () {
 });
 
 Route::resource('products', ProductController::class);
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+
 Route::resource('categories', CategoryController::class);
 Route::resource('users', UserController::class);
 Route::resource('coupons', CouponController::class);

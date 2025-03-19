@@ -10,9 +10,11 @@ class Product extends Model
     protected $fillable = [
         'name', 
         'description', 
+        'category_name', // Add this field
         'price', 
-        'stock', 
-        'image'];
+        'image'
+    ];
+    
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
 }
