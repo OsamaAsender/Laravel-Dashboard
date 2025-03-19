@@ -10,7 +10,6 @@ return new class extends Migration
      * Run the migrations.
      */
 
-    // id, name, email, password, address ,mobile_number, gender, photo 
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {

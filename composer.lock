@@ -1184,6 +1184,7 @@
                 "symfony/http-client": "^7.0.3",
                 "symfony/psr-http-message-bridge": "^7.0.3",
                 "symfony/translation": "^7.0.3"
+
             },
             "suggest": {
                 "ably/ably-php": "Required to use the Ably broadcast driver (^1.0).",
@@ -1220,6 +1221,7 @@
                 "symfony/mailgun-mailer": "Required to enable support for the Mailgun mail transport (^7.0).",
                 "symfony/postmark-mailer": "Required to enable support for the Postmark mail transport (^7.0).",
                 "symfony/psr-http-message-bridge": "Required to use PSR-7 bridging features (^7.0)."
+
             },
             "type": "library",
             "extra": {
@@ -1268,6 +1270,7 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2025-03-12T14:34:30+00:00"
+
         },
         {
             "name": "laravel/prompts",
