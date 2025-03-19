@@ -1,53 +1,124 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function products()
+    /**
+     * Display a listing of products.
+     */
+    public function index()
     {
-       
-        return view('products');
+        $products = Product::all();
+        return view('products.index', compact('products'));
     }
 
+    /**
+     * Show the form for creating a new product.
+     */
     public function create()
     {
-        return view(view: 'create');
-        // return redirect()->route('products');
-        
+        return view('products.create');
     }
 
-
-
-    public function edit()
+    /**
+     * Store a newly created product in storage.
+     */
+    public function store(Request $request)
     {
-     
-        return view('edit');
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        // Handle image upload
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+        }
+
+        // Create product
+        Product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'image' => $imagePath
+        ]);
+
+        return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
-    // public function update()
-    // {
-       
-    //     return '';
-    // }
-
-    // public function destroy($id)
-    // {
-       
-    //     return redirect()->route('index');
-    // }
-
-    public function show()
+    /**
+     * Display the specified product.
+     */
+    public function show($id)
     {
-        
-        return view('show');
+        $product = Product::findOrFail($id);
+        return view('products.show', compact('product'));
     }
-    public function store(){
-        // $data= $_POST;
-        // return $data;
-        return to_route(route: 'store');
 
+    /**
+     * Show the form for editing the specified product.
+     */
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('products.edit', compact('product'));
+    }
+
+    /**
+     * Update the specified product in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'sometimes|numeric|min:0',
+            'stock' => 'sometimes|integer|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        // Handle image update
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+            $imagePath = $request->file('image')->store('products', 'public');
+            $product->image = $imagePath;
+        }
+
+        // Update other fields
+        $product->update($request->only(['name', 'description', 'price', 'stock']));
+
+        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
+    }
+
+    /**
+     * Remove the specified product from storage.
+     */
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+
+        // Delete image if exists
+        if ($product->image) {
+            Storage::disk('public')->delete($product->image);
+        }
+
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
 }

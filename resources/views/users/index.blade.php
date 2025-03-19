@@ -2,9 +2,11 @@
 @section('title', 'All Users')
 
 @section('content')
-    <h1>Users List</h1>
-    <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Create User</a>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
+        <h2>Users List</h2>
+        <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Create User</a>
+    </div>
     <table class="table table-striped">
         <thead>
             <tr>

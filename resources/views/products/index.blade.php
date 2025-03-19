@@ -1,12 +1,13 @@
-@extends('components.layout')
+@extends('layouts.app')
 
 @section('title', 'Products')
 
 @section('content')
 <div class="container mt-5">
-    <h1 class="mb-4">Products</h1>
-    <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Add Product</a>
-    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-4">Products</h2>
+        <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Add Product</a>
+    </div>
     <table class="table table-bordered">
         <thead>
             <tr>

@@ -1,24 +1,26 @@
 @extends('layouts.app')
 
-@section('title', 'التصنيفات')
+@section('title', 'Categories')
 
 @section('content')
     <div class="container">
-        <h1>قائمة التصنيفات</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>Categories</h2>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">إضافة تصنيف جديد</a>
-
+        <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Create new category</a>
+    </div>
         <table class="table">
             <thead>
                 <tr>
-                    <th>الاسم</th>
-                    <th>الوصف</th>
-                    <th>السعر</th>
-                    <th>العمليات</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,11 +30,11 @@
                         <td>{{ $category->description }}</td>
                         <td>{{ $category->price }}</td> <!-- عرض السعر هنا -->
                         <td>
-                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning">تعديل</a>
+                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning">Edit</a>
                             <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">حذف</button>
+                                <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </td>
                     </tr>

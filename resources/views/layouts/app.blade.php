@@ -8,11 +8,8 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS (Optional) -->
+    <!-- Custom CSS -->
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
         .navbar {
             margin-bottom: 20px;
         }
@@ -23,7 +20,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">Users Crud</a>
+            <a class="navbar-brand" href="#">Admin Dashboard</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -36,7 +33,10 @@
                         <a class="nav-link" href="{{ route('categories.index') }}">Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.orders.index') }}">Admin Orders</a>
+                        <a class="nav-link" href="{{ route('products.index') }}">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.orders.index') }}">Orders</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('coupons.index') }}">Coupons</a>                    

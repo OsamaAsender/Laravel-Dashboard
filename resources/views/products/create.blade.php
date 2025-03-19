@@ -1,10 +1,10 @@
-@extends('components.layout')
+@extends('layouts.app')
 
 @section('title', 'Create Product')
 
 @section('content')
 <div class="container mt-5">
-    <h1>Create Product</h1>
+    <h2>Create Product</h2>
     <form action="{{ route('products.store') }}" method="POST">
         @csrf
         <div class="mb-3">

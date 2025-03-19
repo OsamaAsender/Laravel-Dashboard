@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Coupons</h1>
+        <h2>Coupons</h2>
         <a href="{{ route('coupons.create') }}" class="btn btn-primary">Create New Coupon</a>
     </div>
 
