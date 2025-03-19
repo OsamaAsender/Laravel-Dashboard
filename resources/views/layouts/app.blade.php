@@ -36,7 +36,10 @@
                         <a class="nav-link" href="{{ route('categories.index') }}">Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('coupons.index') }}">Coupons</a>
+                        <a class="nav-link" href="{{ route('admin.orders.index') }}">Admin Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('coupons.index') }}">Coupons</a>                    
                     </li>
                 </ul>
             </div>
@@ -46,8 +49,6 @@
     <div class="container">
         @yield('content')
     </div>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
