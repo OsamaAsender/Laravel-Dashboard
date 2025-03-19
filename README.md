@@ -60,5 +60,5 @@ This repository contains CRUD (Create, Read, Update, Delete) implementations in 
 This repository is primarily for educational purposes. If you'd like to contribute, feel free to submit a pull request or open an issue.
 
 ## 📬 Contact
-For any questions, reach out via GitHub or through my Orange Coding Academy network. 😊
+For any questions, reach out via GitHub. 😊
 
