@@ -11,7 +11,8 @@ class Product extends Model
         'name', 
         'description', 
         'category_name', // Add this field
-        'price', 
+        'price',
+        'stock',
         'image'
     ];
     

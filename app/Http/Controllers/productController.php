@@ -36,6 +36,7 @@ class ProductController extends Controller
             'description'   => 'required|string',
             'category_name' => 'required|string|max:255',
             'price'         => 'required|numeric',
+            'stock'         => 'required|integer|min:0',
             'image'         => 'nullable|image|max:2048',
         ]);
     
@@ -77,14 +78,16 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-
+    
         $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'sometimes|numeric|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'name'          => 'sometimes|string|max:255',
+            'description'   => 'nullable|string',
+            'category_name' => 'required|string|max:255',
+            'price'         => 'sometimes|numeric|min:0',
+            'stock'         => 'required|integer|min:0',
+            'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-
+    
         // Handle image update
         if ($request->hasFile('image')) {
             // Delete old image if exists
@@ -94,12 +97,13 @@ class ProductController extends Controller
             $imagePath = $request->file('image')->store('products', 'public');
             $product->image = $imagePath;
         }
-
-        // Update other fields
-        $product->update($request->only(['name', 'description', 'price']));
-
+    
+        // Update all fields, including stock and category_name
+        $product->update($request->only(['name', 'description', 'category_name', 'price', 'stock']));
+    
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
+    
 
     /**
      * Remove the specified product from storage.

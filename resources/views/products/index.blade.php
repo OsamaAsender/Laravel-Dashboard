@@ -16,6 +16,7 @@
                 <th>Description</th>
                 <th>Category</th>
                 <th>Price</th>
+                <th>Stock</th>
                 <th>Image</th>
                 <th>Actions</th>
             </tr>
@@ -23,11 +24,12 @@
         <tbody>
             @forelse ($products as $product)
             <tr>
-                <td>{{ $product->id }}</td>
-                <td>{{ $product->name }}</td>
-                <td>{{ $product->description }}</td>
-                <td>{{ $product->category_name }}</td>
+                <td>{{ $product ->id }}</td>
+                <td>{{ $product ->name }}</td>
+                <td>{{ $product ->description }}</td>
+                <td>{{ $product ->category_name }}</td>
                 <td>${{ $product->price }}</td>
+                <td>{{ $product ->stock }}</td>
                 <td><img src="{{ $product->image }}" alt="{{ $product->name }}" width="100"></td>
                 <td>
                     <!-- Edit button -->
