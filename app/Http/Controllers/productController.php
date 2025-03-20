@@ -30,31 +30,27 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        // Validate the request
+        $validatedData = $request->validate([
+            'name'          => 'required|string|max:255',
+            'description'   => 'required|string',
+            'category_name' => 'required|string|max:255',
+            'price'         => 'required|numeric',
+            'stock'         => 'required|integer|min:0',
+            'image'         => 'nullable|image|max:2048',
         ]);
-
-        // Handle image upload
-        $imagePath = null;
+    
+        // Handle file upload if necessary
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('products', 'public');
+            $validatedData['image'] = $imagePath;
         }
-
-        // Create product
-        Product::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'stock' => $request->stock,
-            'image' => $imagePath
-        ]);
-
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+    
+        Product::create($validatedData);
+    
+        return redirect()->back()->with('success', 'Product created successfully!');
     }
+    
 
     /**
      * Display the specified product.
@@ -73,6 +69,8 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         return view('products.edit', compact('product'));
     }
+    
+    
 
     /**
      * Update the specified product in storage.
@@ -80,15 +78,16 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-
+    
         $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'sometimes|numeric|min:0',
-            'stock' => 'sometimes|integer|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'name'          => 'sometimes|string|max:255',
+            'description'   => 'nullable|string',
+            'category_name' => 'required|string|max:255',
+            'price'         => 'sometimes|numeric|min:0',
+            'stock'         => 'required|integer|min:0',
+            'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-
+    
         // Handle image update
         if ($request->hasFile('image')) {
             // Delete old image if exists
@@ -98,12 +97,13 @@ class ProductController extends Controller
             $imagePath = $request->file('image')->store('products', 'public');
             $product->image = $imagePath;
         }
-
-        // Update other fields
-        $product->update($request->only(['name', 'description', 'price', 'stock']));
-
+    
+        // Update all fields, including stock and category_name
+        $product->update($request->only(['name', 'description', 'category_name', 'price', 'stock']));
+    
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
+    
 
     /**
      * Remove the specified product from storage.

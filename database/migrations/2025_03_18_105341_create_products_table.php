@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('category_name');
             $table->string('image');
             $table->integer('price');
+            $table->integer('stock');
         });
     }
 
