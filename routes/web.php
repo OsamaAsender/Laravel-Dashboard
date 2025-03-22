@@ -7,7 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ProductController;
-
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,3 +34,8 @@ Route::prefix('customer')->name('customer.')->group(function () {
     Route::post('/orders', [CustomerOrderController::class, 'store'])->name('orders.store');
     Route::get('/orders/{order}', [CustomerOrderController::class, 'show'])->name('orders.show');
 });
+
+
+Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/profile/{username}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::put('/profile/{username}', [ProfileController::class, 'update'])->name('profile.update');
